@@ -1,0 +1,26 @@
+[
+  {
+    "file": "src/main.c",
+    "arguments": [
+      "/usr/bin/gcc",
+      "-I./include",
+      "src/main.c",
+      "-o",
+      "shooter-platformer"
+    ],
+    "directory": "/home/tucello/Documentos/programming/personal/gamedev/making-game-engine/shooter-platformer",
+    "output": "shooter-platformer"
+  },
+  {
+    "file": "src/glad.c",
+    "arguments": [
+      "/usr/bin/gcc",
+      "-I./include",
+      "src/glad.c",
+      "-o",
+      "shooter-platformer"
+    ],
+    "directory": "/home/tucello/Documentos/programming/personal/gamedev/making-game-engine/shooter-platformer",
+    "output": "shooter-platformer"
+  }
+]
