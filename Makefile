@@ -11,7 +11,7 @@ CFLAGS = -I./include
 LIBS = -lSDL2 -lGL -ldl
 
 # Arquivos de código do projeto (Agora ambos estão dentro da pasta src)
-SRCS = src/main.c src/glad.c
+SRCS = src/main.c src/glad.c src/engine/global.c src/engine/render/render.c src/engine/render/render_init.c
 
 # Regra principal para compilar
 all:

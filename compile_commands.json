@@ -22,5 +22,41 @@
     ],
     "directory": "/home/tucello/Documentos/programming/personal/gamedev/making-game-engine/shooter-platformer",
     "output": "shooter-platformer"
+  },
+  {
+    "file": "src/engine/global.c",
+    "arguments": [
+      "/usr/bin/gcc",
+      "-I./include",
+      "src/engine/global.c",
+      "-o",
+      "shooter-platformer"
+    ],
+    "directory": "/home/tucello/Documentos/programming/personal/gamedev/making-game-engine/shooter-platformer",
+    "output": "shooter-platformer"
+  },
+  {
+    "file": "src/engine/render/render.c",
+    "arguments": [
+      "/usr/bin/gcc",
+      "-I./include",
+      "src/engine/render/render.c",
+      "-o",
+      "shooter-platformer"
+    ],
+    "directory": "/home/tucello/Documentos/programming/personal/gamedev/making-game-engine/shooter-platformer",
+    "output": "shooter-platformer"
+  },
+  {
+    "file": "src/engine/render/render_init.c",
+    "arguments": [
+      "/usr/bin/gcc",
+      "-I./include",
+      "src/engine/render/render_init.c",
+      "-o",
+      "shooter-platformer"
+    ],
+    "directory": "/home/tucello/Documentos/programming/personal/gamedev/making-game-engine/shooter-platformer",
+    "output": "shooter-platformer"
   }
 ]

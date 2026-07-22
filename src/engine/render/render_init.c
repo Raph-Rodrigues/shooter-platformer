@@ -1,0 +1,83 @@
+#include <SDL2/SDL.h>
+#include <glad/glad.h>
+
+#include "../global.h"
+#include "../util.h"
+
+#include "render.h"
+#include "render_internal.h"
+
+SDL_Window *render_init_window(u32 width, u32 height) {
+  // Inicializa o subsistema de video do SDL
+  if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    ERROR_EXIT("ERRO: nao pode iniciar SDL: %s\n", SDL_GetError());
+  }
+
+  // Configura os atributos do OpenGL após SDL_Init
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+
+  // Cria a janela
+  SDL_Window *window =
+      SDL_CreateWindow("Shooter Platformer", SDL_WINDOWPOS_CENTERED,
+                       SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_OPENGL);
+
+  if (!window) {
+    ERROR_EXIT("ERRO: não pode criar janela: %s\n", SDL_GetError());
+    SDL_Quit();
+  }
+
+  // salva o contexto na variável e verifica se houve erro
+  SDL_GLContext gl_context = SDL_GL_CreateContext(window);
+  if (!gl_context) {
+    ERROR_EXIT("ERRO: não pode criar o contexto OpenGL: %s\n", SDL_GetError());
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+  }
+
+  // Carrega os ponteiros do OpenGL usando glad
+  if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
+    ERROR_EXIT("ERRO: não pode carregar o GL: %s\n", SDL_GetError());
+    SDL_GL_DeleteContext(gl_context);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+  }
+
+  puts("OpenGL Carregou");
+  printf("Vendor:   %s\n", glGetString(GL_VENDOR));
+  printf("Renderer:   %s\n", glGetString(GL_RENDERER));
+  printf("Version:   %s\n", glGetString(GL_VERSION));
+
+  return window;
+}
+
+void render_init_quad(u32 *vao, u32 *vbo, u32 *ebo) {
+  //         x         y,      z,    u,      v
+  f32 vertices[] = {0.5,  0.5,  0, 0, 0, 0.5,  -0.5, 0, 0, 1,
+                    -0.5, -0.5, 0, 1, 1, -0.5, 0.5,  0, 1, 0};
+
+  u32 indices[] = {0, 1, 3, 1, 2, 3};
+
+  glGenVertexArrays(1, vao);
+  glGenBuffers(1, vbo);
+  glGenBuffers(1, ebo);
+
+  glBindVertexArray(*vao);
+
+  glBindBuffer(GL_ARRAY_BUFFER, *vbo);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *ebo);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices,
+               GL_STATIC_DRAW);
+
+  // xyz
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(f32), NULL);
+  glEnableVertexAttribArray(0);
+
+  // uv
+  glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(f32),
+                        (void *)(3 * sizeof(f32)));
+  glad_glEnableVertexAttribArray(1);
+}
